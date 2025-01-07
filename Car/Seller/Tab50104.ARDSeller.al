@@ -29,10 +29,12 @@ table 50104 "ARD Car Seller"
         {
             Caption = 'Number of Cars';
             MinValue = 0;
+            ObsoleteState = Removed;
+            ObsoleteReason = 'This field has been replaced by NoCars';
         }
-        field(6; Cars; Integer)
+        field(6; NoCars; Integer)
         {
-            Caption = 'Cars';
+            Caption = 'NoCars';
             FieldClass = FlowField;
             CalcFormula = Count("ARD Car" WHERE(Company = field(Company)));
             Editable = false;

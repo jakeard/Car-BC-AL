@@ -32,16 +32,15 @@ page 50102 "ARD Seller Card"
             group(OtherInfo)
             {
                 Caption = 'Other Information';
-                field(CarCount; Rec.CarCount)
+                field(CarCount; Rec.NoCars)
                 {
                     ToolTip = 'Car Count field value', Comment = '%';
-                    Editable = false;
                 }
-                field(Cars; Rec.Cars)
-                {
-                    ToolTip = 'Car count', Comment = '%';
-                    // Editable = false;
-                }
+                // field(Cars; Rec.Cars)
+                // {
+                //     ToolTip = 'Car count', Comment = '%';
+                //     // Editable = false;
+                // }
             }
         }
     }

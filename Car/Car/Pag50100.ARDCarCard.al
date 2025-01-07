@@ -66,4 +66,7 @@ page 50100 "ARD Car Card"
             }
         }
     }
+    // trigger OnOpenPage()
+    // var
+
 }
