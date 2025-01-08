@@ -25,6 +25,11 @@ table 50101 "ARD Car"
             DataClassification = CustomerContent;
             Caption = 'Miles';
             MinValue = 0;
+            trigger OnValidate()
+            begin
+                if Miles > 1000001 then
+                    Error('The entered value is too high. Please enter a valid number of miles. Value: %1', Miles);
+            end;
         }
         field(5; Condition; Text[500])
         {
@@ -37,34 +42,19 @@ table 50101 "ARD Car"
         field(7; BuildDate; Date)
         {
             Caption = 'Build Date';
-            // MinValue = DMY2Date(1, 1, Year - 1);
-            // trigger OnValidate()
-            // var
-            // CurrentDate: Today;
-            // MinDate: Date;
-            // MaxDate: Date;
-
-            // begin
-            //     MinDate := DMY2Date(1, 1, Year - 1);
-            //     MaxDate := DMY2Date(31, 12, Year);
-            //     // CurrentDate := Today;
-            //     if (Year > MaxDate) or (Today < MinDate)
-            // end;
             trigger OnValidate()
             var
                 MinDate: Date;
                 MaxDate: Date;
             begin
-                if Year = 0 then begin
-                    Message('You must enter a year before entering the build date.');
-                    BuildDate := 0D;
+                if (Year < 1885) or (Year > Date2DMY(Today, 3) + 1) then begin
+                    Error('You must enter a valid year before entering the build date.');
                 end
                 else begin
                     MinDate := DMY2Date(1, 1, Year - 1);
                     MaxDate := DMY2Date(31, 12, Year);
                     if (BuildDate < MinDate) or (BuildDate > MaxDate) then begin
-                        Message('Please enter a valid build date.');
-                        BuildDate := 0D;
+                        Error('Please enter a valid build date.');
                     end;
                 end;
             end;
@@ -84,8 +74,7 @@ table 50101 "ARD Car"
             begin
                 CurrentYear := Date2DMY(Today, 3);
                 if Year > CurrentYear + 1 then begin
-                    Message('Please enter a valid car model year.');
-                    Year := CurrentYear;
+                    Error('Please enter a valid car model year. Value: %1', Year);
                 end;
             end;
         }
@@ -100,19 +89,6 @@ table 50101 "ARD Car"
         {
             Caption = 'Company';
             TableRelation = "ARD Car Seller".Company;
-
-            // trigger OnValidate() // Adds 1 to the specified company's car count per car that is added
-            // var
-            //     Seller: Record "ARD Car Seller";
-            // begin
-            //     // MESSAGE('Company value: %1', Company);
-            //     // if Company = '' then
-            //     //     exit;
-
-            //     Seller.Get(Company);
-            //     Seller.CarCount := Seller.CarCount + 1;
-            //     Seller.Modify();
-            // end;
         }
     }
     keys
