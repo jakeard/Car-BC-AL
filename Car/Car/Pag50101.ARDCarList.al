@@ -26,6 +26,10 @@ page 50101 "ARD Car List"
                 {
                     ToolTip = 'Specifies the value of the Year field.', Comment = '%';
                 }
+                field(Cost; Rec.Cost)
+                {
+                    ToolTip = 'Value of the Cost field.', Comment = '%';
+                }
             }
         }
     }

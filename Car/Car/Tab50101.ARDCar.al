@@ -34,6 +34,9 @@ table 50101 "ARD Car"
         field(5; Condition; Text[500])
         {
             Caption = 'Condition';
+            ObsoleteState = Removed;
+            ObsoleteReason = 'Moved to enum, is now field under name Quality.';
+
         }
         field(6; Color; Text[100])
         {
@@ -89,6 +92,29 @@ table 50101 "ARD Car"
         {
             Caption = 'Company';
             TableRelation = "ARD Car Seller".Company;
+        }
+        field(11; Price; Integer)
+        {
+            Caption = 'Price';
+            MinValue = 0;
+            ObsoleteState = Removed;
+            ObsoleteReason = 'Wrong data type, replaced by Cost.';
+        }
+        field(12; Cost; Decimal)
+        {
+            Caption = 'Price';
+            MinValue = 0;
+            DecimalPlaces = 2;
+        }
+        field(13; Quality; Enum "ARD Car Condition")
+        {
+            Caption = 'Condition';
+
+            // trigger OnValidate()
+            // begin
+            //     if Quality = Quality::None then
+            //         Error('You must choose a car condition.');
+            // end;
         }
     }
     keys
