@@ -36,11 +36,6 @@ page 50102 "ARD Seller Card"
                 {
                     ToolTip = 'Car Count field value', Comment = '%';
                 }
-                // field(Cars; Rec.Cars)
-                // {
-                //     ToolTip = 'Car count', Comment = '%';
-                //     // Editable = false;
-                // }
             }
         }
     }
