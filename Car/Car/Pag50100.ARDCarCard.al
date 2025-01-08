@@ -35,6 +35,10 @@ page 50100 "ARD Car Card"
             {
                 Caption = 'Car Information';
 
+                field(Cost; Rec.Cost)
+                {
+                    ToolTip = 'Value of the Cost field.', Comment = '%';
+                }
                 field(Miles; Rec.Miles)
                 {
                     ToolTip = 'Specifies the value of the Miles field.', Comment = '%';
@@ -43,7 +47,7 @@ page 50100 "ARD Car Card"
                 {
                     ToolTip = 'Specifies the value of the Color field.', Comment = '%';
                 }
-                field(Condition; Rec.Condition)
+                field(Condition; Rec.Quality)
                 {
                     ToolTip = 'Specifies the value of the Condition field.', Comment = '%';
                 }
@@ -66,7 +70,4 @@ page 50100 "ARD Car Card"
             }
         }
     }
-    // trigger OnOpenPage()
-    // var
-
 }
