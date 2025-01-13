@@ -11,14 +11,38 @@ table 50101 "ARD Car"
         {
             Caption = 'VIN';
             NotBlank = true;
+            trigger OnValidate()
+            var
+                VinLookup: Codeunit "ARD Car API";
+                VinMake, VinModel : Text[50];
+                VinYear: Integer;
+            begin
+                if StrLen(VIN) < 17 then
+                    Error('Invalid VIN number.')
+                else begin
+                    VinMake := '';
+                    VinModel := '';
+                    VinYear := 0;
+                    VinLookup.GetCars(VIN, VinMake, VinModel, VinYear);
+                    // Message('%1 %2', VinMake, VinModel);
+                    Make := VinMake;
+                    Model := VinModel;
+                    Year := VinYear;
+                end;
+            end;
+
         }
         field(2; Make; Text[50])
         {
             Caption = 'Make';
+            Editable = false;
+            // TableRelation = "ARD Makes and Models".CarMake;
         }
         field(3; Model; Text[50])
         {
             Caption = 'Model';
+            Editable = false;
+            // TableRelation = "ARD Makes and Models".CarModel;
         }
         field(4; Miles; Integer)
         {
@@ -52,6 +76,7 @@ table 50101 "ARD Car"
             begin
                 if (Year < 1885) or (Year > Date2DMY(Today, 3) + 1) then begin
                     Error('You must enter a valid year before entering the build date.');
+                    Validate(Quality);
                 end
                 else begin
                     MinDate := DMY2Date(1, 1, Year - 1);
@@ -67,19 +92,20 @@ table 50101 "ARD Car"
         {
             Caption = 'Year';
             BlankZero = true;
-            MinValue = 1885;
+            // MinValue = 1885;
+            Editable = false;
 
-            trigger OnValidate()
-            var
-                CurrentYear: Integer;
-                MinDate: Date;
-                MaxDate: Date;
-            begin
-                CurrentYear := Date2DMY(Today, 3);
-                if Year > CurrentYear + 1 then begin
-                    Error('Please enter a valid car model year. Value: %1', Year);
-                end;
-            end;
+            // trigger OnValidate()
+            // var
+            //     CurrentYear: Integer;
+            //     MinDate: Date;
+            //     MaxDate: Date;
+            // begin
+            //     CurrentYear := Date2DMY(Today, 3);
+            //     if Year > CurrentYear + 1 then begin
+            //         Error('Please enter a valid car model year. Value: %1', Year);
+            //     end;
+            // end;
         }
         field(9; SellerID; Code[20])
         {
@@ -110,13 +136,19 @@ table 50101 "ARD Car"
         {
             Caption = 'Condition';
 
-            // trigger OnValidate()
-            // begin
-            //     if Quality = Quality::None then
-            //         Error('You must choose a car condition.');
-            // end;
+            trigger OnValidate()
+            begin
+                if Quality = Quality::None then
+                    Error('Please choose a car condition.');
+            end;
         }
     }
+
+    // fieldgroups
+    // {
+    //     fieldgroup(DropDown; ){}
+    // }
+
     keys
     {
         key(PK; VIN)
