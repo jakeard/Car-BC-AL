@@ -5,6 +5,7 @@ page 50100 "ARD Car Card"
     PageType = Card;
     SourceTable = "ARD Car";
 
+
     layout
     {
         area(Content)
@@ -20,10 +21,23 @@ page 50100 "ARD Car Card"
                 field(Make; Rec.Make)
                 {
                     ToolTip = 'Specifies the value of the Make field.', Comment = '%';
+                    // Lookup = true;
+                    // LookupPageId = "ARD Makes and Models List";
+                    // LookupPageId = "ARD Makes and Models List";
+
+                    // trigger on
+
+                    // trigger OnLookup(var Text: Text): Boolean
+                    // var
+                    //     MakeRec: Record "ARD Makes and Models";
+                    // // Models: Record "Makes and Models"
+                    // begin
+                    // end;
                 }
                 field(Model; Rec.Model)
                 {
                     ToolTip = 'Specifies the value of the Model field.', Comment = '%';
+                    // LookupPageId = "ARD Makes and Models List";
                 }
                 field(Year; Rec.Year)
                 {
@@ -70,4 +84,6 @@ page 50100 "ARD Car Card"
             }
         }
     }
+    var
+        Other: Text[50];
 }
